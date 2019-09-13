@@ -1,7 +1,11 @@
 package com.everis.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+
 import java.io.Serializable;
+import java.util.Date;
+
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -21,8 +25,8 @@ public class Parents implements Serializable {
 
   String fullName;
   String gender;
-    //@JsonFormat(pattern = "yyy-MM-dd")
-  String dateofBirth;
+  @JsonFormat(pattern = "yyyy-MM-dd", shape = Shape.STRING)
+  Date dateofBirth;
   String typeofIdentificationDocument;
   String identificationDocumentNumber;  
     

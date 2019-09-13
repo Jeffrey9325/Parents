@@ -7,6 +7,8 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,20 +28,20 @@ public class RestControllerParents implements Iparents {
   @Override
   @RequestMapping(value = "/names/{fullName}", method = RequestMethod.GET)
   public Flux<Parents> searchbyName(String fullName) {
-    return repository.findByfullName(fullName);
+    return repository.findByFullName(fullName);
   }
 
   @Override
   @RequestMapping(value = "/documents/{document}", method = RequestMethod.GET)
   public Mono<Parents> searchbyDocument(String document) {
-    return repository.findByidentificationDocumentNumber(document);
+    return repository.findByIdentificationDocumentNumber(document);
   }
 
   @Override
-  @RequestMapping(value = "/dates/{date}", method = RequestMethod.GET)
+  @RequestMapping(value = "/dates/{from}/{to}", method = RequestMethod.GET)
   public Flux<Parents> searchbyrankdateofBirth(Date from, Date to) {
-    //return repository.findByrankdateofBirth(date1, date2);
-	  return null;
+    return repository.findByDateofBirthBetween(from, to);
+
   }
 
   @Override
@@ -56,17 +58,32 @@ public class RestControllerParents implements Iparents {
   }
 
   @Override
-  @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-  public Mono<Parents> modifyParents(String id, Parents parents) {
-    //Mono<Parents> st = repository.findById(id);
-    parents.setId(id);
-    return repository.save(parents);
+  @PutMapping("{id}")
+  public Mono<ResponseEntity<Parents>> modifyParents(String id, Parents parents) {
+    return repository.findById(id)
+.flatMap(people -> {
+  people.setId(id);
+  people.setFullName(parents.getFullName());
+  people.setGender(parents.getGender());
+  people.setDateofBirth(parents.getDateofBirth());
+  people.setTypeofIdentificationDocument(parents.getTypeofIdentificationDocument());
+  people.setIdentificationDocumentNumber(parents.getIdentificationDocumentNumber());
+  return repository.save(people);
+})
+.map(update -> new ResponseEntity<>(update, HttpStatus.OK))
+.defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    
   }
 
   @Override
-  @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+  @DeleteMapping("{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public Mono<Void> deleteParents(String id) {
-    return repository.deleteById(id);
+  public Mono<ResponseEntity<Void>> deleteParents(String id) {
+    return repository.findById(id)
+.flatMap(people ->
+repository.delete(people)
+.then(Mono.just(new ResponseEntity<Void>(HttpStatus.NO_CONTENT)))  
+)
+.defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 }
