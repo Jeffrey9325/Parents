@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,11 +24,16 @@ public class Parents implements Serializable {
   @NotNull
    String id;
 
+  @NotEmpty(message = "No debe ser vacio!")
   String fullName;
+  @NotEmpty(message = "No debe ser vacio!")
   String gender;
+  @NotNull
   @JsonFormat(pattern = "yyyy-MM-dd", shape = Shape.STRING)
   Date dateofBirth;
+  @NotEmpty(message = "No debe ser vacio!")
   String typeofIdentificationDocument;
+  @NotEmpty(message = "No debe ser vacio!")
   String identificationDocumentNumber;  
     
 }

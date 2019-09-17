@@ -1,9 +1,9 @@
 package com.everis.interfaces;
 
 import com.everis.model.Parents;
-
-
 import java.util.Date;
+
+import javax.validation.Valid;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -16,14 +16,16 @@ import reactor.core.publisher.Mono;
 
 public interface Iparents {
 
+//  Flux<ResponseEntity<Parents>>  searchbyName(@PathVariable String fullName);
   Flux<Parents> searchbyName(@PathVariable String fullName);
 
-  Mono<Parents> searchbyDocument(@PathVariable String document);
+  Mono<ResponseEntity<Parents>> searchbyDocument(@PathVariable String document);
 
-  Flux<Parents> searchbyrankdateofBirth(@PathVariable @DateTimeFormat(iso = ISO.DATE) Date from,
+  Flux<ResponseEntity<Parents>> searchbyrankdateofBirth(
+      @PathVariable @DateTimeFormat(iso = ISO.DATE) Date from,
       @PathVariable  @DateTimeFormat(iso = ISO.DATE) Date to);
 
-  Mono<Parents> createParents(@RequestBody Parents parents);
+  Mono<ResponseEntity<Void>> createParents(@RequestBody Parents parents);
 
   Flux<Parents> allParents();
 
