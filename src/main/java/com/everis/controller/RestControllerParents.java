@@ -32,14 +32,14 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping("/Parents/v1.0")
 public class RestControllerParents {
-
-	//private static final Logger log = LoggerFactory.getLogger(ParentRestController.class);
- 
-  @Autowired
-  ParentsServiceImpl repository;
   /**
-   * search by fullname in Parents document.
-   * @param fullName family name
+   * Parents Service Implement.
+   */
+  @Autowired
+  private ParentsServiceImpl repository;
+  /**
+   * search by full name in Parents document.
+   * @param fullName full name
    * @return
    */
   
@@ -48,7 +48,7 @@ public class RestControllerParents {
     return repository.searchbyName(fullName);
   }
   /**
-   * search by identification document number in Parents document.
+   * search by identification document number parents document.
    * @param document identification document number
    * @return
    */
@@ -59,20 +59,20 @@ public class RestControllerParents {
   }
   
   /**
-   * search by rank date of Birth in Parents document.
+   * search by rank date of Birth parents document.
    * @param fromDate date
    * @param toDate date
    * @return
    */
   
-  @GetMapping("/dates/{from}/{to}")
+  @GetMapping("/dates/{fromDate}/{toDate}")
   public Flux<Parents> searchbyrankdateofBirth(
       @PathVariable @DateTimeFormat(iso = ISO.DATE) final Date fromDate,
       @PathVariable  @DateTimeFormat(iso = ISO.DATE) final Date toDate) {
     return repository.searchbyrankdateofBirth(fromDate, toDate);
   }
   /**
-   * create record in Parents document.
+   * create record parents document.
    * @param parents people
    * @return
    */
@@ -83,55 +83,47 @@ public class RestControllerParents {
   .then(Mono.just(new ResponseEntity<Parents>(HttpStatus.CREATED)))
   .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
-  
-//  @PostMapping("/")
-//  public Mono<Parents> createParents(@Valid @RequestBody Parents parents) {
-//    return repository.createParents(parents)
-//  //.then(Mono.just( <Parents>(HttpStatus.CREATED)))
-//  .defaultIfEmpty(Mono.error(new ApiRequestException("Error")));
-//  }
   /**
-   * show all record of Parents document.
+   * show all record of parents document.
    * @return
    */
   
   @GetMapping("/")
   public Flux<Parents> allParents() {
-	 //7 throw new ApiRequestException("Error");
-   return repository.allParents();
+    return repository.allParents();
   }
   /**
-   * modify record of Parents document.
-   * @param idParents id
+   * modify record of parents document.
+   * @param id identification
    * @param parents people
    * @return
    */
   
   @PutMapping("/{id}")
-  public Mono<ResponseEntity<Parents>> modifyParents(@PathVariable final String idParents,
-      @RequestBody final Parents parents) {
-    return repository.findbyId(idParents)
+  public Mono<ResponseEntity<Parents>> modifyParents(@PathVariable final String id,
+      @Valid @RequestBody final Parents parents) {
+    return repository.findbyId(id)
   .flatMap(people -> {
-    people.setId(idParents);
+    people.setId(id);
     people.setFullName(parents.getFullName());
     people.setGender(parents.getGender());
     people.setDateofBirth(parents.getDateofBirth());
-    people.setTypeofIdentificationDocument(parents.getTypeofIdentificationDocument());
-    people.setIdentificationDocumentNumber(parents.getIdentificationDocumentNumber());
+    people.setTypeDocument(parents.getTypeDocument());
+    people.setDocumentNumber(parents.getDocumentNumber());
     return repository.modifyParents(people);
   })
   .map(update -> new ResponseEntity<>(update, HttpStatus.OK))
   .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
   /**
-   * delete record in Parents document.
-   * @param idParents id
+   * delete record in parents document.
+   * @param id identification
    * @return
    */
   
   @DeleteMapping("/{id}")
-  public Mono<ResponseEntity<Void>> deleteParents(@PathVariable final String idParents) {
-    return repository.findbyId(idParents)
+  public Mono<ResponseEntity<Void>> deleteParents(@PathVariable final String id) {
+    return repository.findbyId(id)
   .flatMap(people ->
   repository.deleteParents(people)
   .then(Mono.just(new ResponseEntity<Void>(HttpStatus.NO_CONTENT)))  

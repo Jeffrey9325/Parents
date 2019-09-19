@@ -10,30 +10,37 @@ import org.springframework.stereotype.Service;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+/**
+ * ParentsServiceImpl class.
+ * @author jeffrey
+ * @version v1.0
+ */
 
 @Service
 public class ParentsServiceImpl implements IParentsService {
-
+  /**
+   * Reactive Repository.
+   */
   @Autowired
-  ReactiveRepository repository;
+  private ReactiveRepository repository;
 
   @Override
-  public Flux<Parents> searchbyName(String name) {
+  public Flux<Parents> searchbyName(final String name) {
     return repository.findByFullName(name);
   }
 
   @Override
-  public Mono<Parents> searchbyDocument(String document) {
-    return repository.findByIdentificationDocumentNumber(document);
+  public Mono<Parents> searchbyDocument(final String documentNumber) {
+    return repository.findByDocumentNumber(documentNumber);
   }
 
   @Override
-  public Flux<Parents> searchbyrankdateofBirth(Date from, Date to) {
+  public Flux<Parents> searchbyrankdateofBirth(final Date from, final Date to) {
     return repository.findByDateofBirthBetween(from, to);
   }
 
   @Override
-  public Mono<Parents> createParents(Parents parents) {
+  public Mono<Parents> createParents(final Parents parents) {
     return repository.save(parents);
   }
 
@@ -43,17 +50,17 @@ public class ParentsServiceImpl implements IParentsService {
   }
 
   @Override
-  public Mono<Parents> modifyParents(Parents parents) {
+  public Mono<Parents> modifyParents(final Parents parents) {
     return repository.save(parents);
   }
 
   @Override
-  public Mono<Void> deleteParents(Parents parents) {
+  public Mono<Void> deleteParents(final Parents parents) {
     return repository.delete(parents);
   }
 
   @Override
-  public Mono<Parents> findbyId(String id) {
-    return repository.findById(id);
+  public Mono<Parents> findbyId(final String idParents) {
+    return repository.findById(idParents);
   }
 }

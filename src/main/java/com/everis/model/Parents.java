@@ -2,16 +2,14 @@ package com.everis.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Id;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
@@ -31,6 +29,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(collection = "parents")
+@JsonPropertyOrder({"id", "fullName", "gender",
+    "dateofBirth", "typeDocument", "documentNumber"})
 public class Parents implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -38,35 +38,42 @@ public class Parents implements Serializable {
    * id.
    */
   @Id
-  //@NotNull
-   private String idParents;
+   private String id;
   /**
-   * fullname.
+   * full name.
    */
-  @NotEmpty(message = "No debe ser vacio")
+  @NotEmpty(message = "should not be empty")
   private String fullName;
   /**
    * gender.
    */
-  @NotEmpty(message = "No debe ser vacio")
+  @NotEmpty(message = "should not be empty")
   private String gender;
   /**
    * date of birth.
    */
-  @JsonProperty
   @JsonFormat(pattern = "yyyy-MM-dd", shape = Shape.STRING)
-  @Past
   @NotNull
   private Date dateofBirth;
   /**
    * type of identification document.
    */
-  @NotEmpty(message = "No debe ser vacio")
+  @NotEmpty(message = "should not be empty")
   private String typeDocument;
   /**
    * identification document number.
    */
-  @Size(min = 8, max = 8,message = "'numberID' debe tener 8 caracteres")
+  @Size(min = 8, max = 8, message = "must contain 8 characters")
   private String documentNumber;  
+  /**
+   * student identification.
+   */
+  @NotEmpty(message = "should not be empty")
+  private String idStudent;
+  /**
+   * family identification.
+   */
+  @NotEmpty(message = "should not be empty")
+  private String idFamily;
     
 }
