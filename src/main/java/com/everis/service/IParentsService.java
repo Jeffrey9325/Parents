@@ -17,7 +17,7 @@ public interface IParentsService {
 
   Mono<Parents> createParents(Parents parents);
 
-  Flux<Parents> allStudents();
+  Flux<Parents> allParents();
 
   Mono<Parents> modifyParents(Parents parents);
 

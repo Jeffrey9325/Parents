@@ -5,7 +5,6 @@ import com.everis.model.Parents;
 import java.io.Serializable;
 import java.util.Date;
 
-import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.stereotype.Repository;
 
