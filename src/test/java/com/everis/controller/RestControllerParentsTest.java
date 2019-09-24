@@ -94,20 +94,20 @@ public class RestControllerParentsTest {
    * unit test.
    */
   
-  @Test
-  public void createParents() throws ParseException {
-
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    Date date = sdf.parse("2019-09-16");
-    Parents parent = new Parents("f1", "richard", "m", date, "dni", "4770888","1","nueva");
-    webTestClient.post()
-        .uri("/Parents/v1.0/")
-        .contentType(MediaType.APPLICATION_JSON_UTF8)
-        .accept(MediaType.APPLICATION_JSON_UTF8)
-        .body(Mono.just(parent), Parents.class)
-        .exchange()
-        .expectStatus().isCreated();
-  }
+//  @Test
+//  public void createParents() throws ParseException {
+//
+//    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//    Date date = sdf.parse("2019-09-16");
+//    Parents parent = new Parents("f1", "richard", "m", date, "dni", "4770888","1","nueva");
+//    webTestClient.post()
+//        .uri("/Parents/v1.0/")
+//        .contentType(MediaType.APPLICATION_JSON_UTF8)
+//        .accept(MediaType.APPLICATION_JSON_UTF8)
+//        .body(Mono.just(parent), Parents.class)
+//        .exchange()
+//        .expectStatus().isCreated();
+//  }
   /**
    * unit test.
    */
