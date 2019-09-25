@@ -63,4 +63,14 @@ public class ParentsServiceImpl implements IParentsService {
   public Mono<Parents> findbyId(final String idParents) {
     return repository.findById(idParents);
   }
+
+  @Override
+  public Flux<Parents> findByIdStudent(String idStudent) {
+    return repository.findByIdStudent(idStudent);
+  }
+
+  @Override
+  public Flux<Parents> findByIdFamily(String idFamily) {
+    return repository.findByIdFamily(idFamily);
+  }
 }

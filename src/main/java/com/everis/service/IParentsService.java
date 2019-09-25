@@ -63,11 +63,25 @@ public interface IParentsService {
   
   Mono<Void> deleteParents(Parents parents);
   /**
-   * find by id student document.
-   * @param idParents id
+   * find by id parents document.
+   * @param idParents identification
    * @return
    */
   
   Mono<Parents> findbyId(String idParents);
+  /**
+   * find by id student parents document. 
+   * @param idStudent identification
+   * @return
+   */
+  
+  Flux<Parents> findByIdStudent(String idStudent);
+  /**
+   * find by id family parents document.
+   * @param idFamily identification
+   * @return
+   */
+  
+  Flux<Parents> findByIdFamily(String idFamily);
   
 }

@@ -46,5 +46,19 @@ public interface ReactiveRepository extends ReactiveMongoRepository<Parents, Ser
    */
   
   Mono<Parents> findById(String idParents);
+  /**
+   * find by id student parents document. 
+   * @param idStudent identification
+   * @return
+   */
+  
+  Flux<Parents> findByIdStudent(String idStudent);
+  /**
+   * find by id family parents document.
+   * @param idFamily identification
+   * @return
+   */
+  
+  Flux<Parents> findByIdFamily(String idFamily);
 
 }

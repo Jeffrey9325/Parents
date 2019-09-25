@@ -130,4 +130,15 @@ public class RestControllerParents {
   )
   .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
+  
+  @GetMapping("/idstudent/{idStudent}")
+  public Flux<Parents> findbyidstudent(@PathVariable final String idStudent) {
+    return repository.findByIdStudent(idStudent);
+  }
+  
+  @GetMapping("/idfamily/{idFamily}")
+  public Flux<Parents> findbyidfamily(@PathVariable final String idFamily) {
+    return repository.findByIdFamily(idFamily);
+  }
+  
 }
