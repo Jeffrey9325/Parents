@@ -15,7 +15,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2WebFlux;
  */
 @EnableCircuitBreaker
 @EnableEurekaClient
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
+@SpringBootApplication
 @EnableSwagger2WebFlux
 public class ParentsMicroserviceApplication {
   /**
