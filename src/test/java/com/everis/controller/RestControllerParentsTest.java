@@ -4,9 +4,8 @@ import com.everis.model.Parents;
 import com.everis.repository.ReactiveRepository;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import org.assertj.core.api.Assertions;
@@ -144,10 +143,8 @@ public class RestControllerParentsTest {
 
     Parents parents = repository.findById("1").block();
     if (parents != null) {
-      SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-      Date fecha = sdf.parse("2019-09-16");
       Parents newParents = new Parents(
-          parents.getId(), "Jeff", "m", fecha, "dni", "159748","1","nueva");
+          parents.getId(), "Jeff", "m", LocalDate.of(1993, 2, 25), "dni", "159748","1","nueva");
       webTestClient.put()
         .uri("/Parents/v1.0/{id}", Collections.singletonMap("id", parents.getId()))
         .contentType(MediaType.APPLICATION_JSON_UTF8)

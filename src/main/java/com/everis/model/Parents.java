@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -54,7 +54,7 @@ public class Parents implements Serializable {
    */
   @JsonFormat(pattern = "yyyy-MM-dd", shape = Shape.STRING)
   @NotNull
-  private Date dateofBirth;
+  private LocalDate dateofBirth;
   /**
    * type of identification document.
    */

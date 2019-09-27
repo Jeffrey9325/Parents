@@ -7,6 +7,7 @@ import com.everis.repository.ReactiveRepository;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 import org.junit.Test;
@@ -35,9 +36,9 @@ public class ParentsServiceImplTes {
 
   @Test
   public void searchbyDocument() throws ParseException {
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    Date fecha = sdf.parse("2019-09-16");
-    Parents parent = new Parents("1", "richard", "m", fecha, "dni", "47701888", "1", "nueva");
+
+    Parents parent = new Parents(
+        "1", "richard", "m", LocalDate.of(1993, 2, 25), "dni", "47701888", "1", "nueva");
     String document = "47701888";
     when(repository.findByDocumentNumber(document)).thenReturn(Mono.just(parent));
     Mono<Parents> actual = parentService.searchbyDocument(document);
@@ -47,9 +48,8 @@ public class ParentsServiceImplTes {
   @Test
   public void createParents() throws ParseException {
 
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    Date fecha = sdf.parse("2019-09-16");
-    Parents parent = new Parents("1", "richard", "m", fecha, "dni", "47701888", "1", "nueva");
+    Parents parent = new Parents(
+        "1", "richard", "m", LocalDate.of(2019, 9, 16), "dni", "47701888", "1", "nueva");
     when(repository.save(parent)).thenReturn(Mono.just(parent));
     Mono<Parents> actual = parentService.createParents(parent);
     assertResults(actual, parent);
@@ -58,9 +58,8 @@ public class ParentsServiceImplTes {
   @Test
   public void allParents() throws ParseException {
 
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    Date fecha = sdf.parse("2019-09-16");
-    Parents parent = new Parents("1", "richard", "m", fecha, "dni", "4770888", "1", "nueva");
+    Parents parent = new Parents(
+        "1", "richard", "m", LocalDate.of(2019, 9, 16), "dni", "47701888", "1", "nueva");
     when(parentService.allParents()).thenReturn(Flux.just(parent));
     Flux<Parents> actual = parentService.allParents();
     assertResults(actual, parent);
@@ -68,9 +67,8 @@ public class ParentsServiceImplTes {
 
   @Test
   public void delete() throws ParseException {
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    Date fecha = sdf.parse("2019-09-16");
-    Parents parent = new Parents("1", "richard", "m", fecha, "dni", "4770888", "1", "nueva");
+    Parents parent = new Parents(
+         "1", "richard", "m", LocalDate.of(2019, 9, 16), "dni", "4770888", "1", "nueva");
     when(repository.delete(parent)).thenReturn(Mono.empty());
   }
 
